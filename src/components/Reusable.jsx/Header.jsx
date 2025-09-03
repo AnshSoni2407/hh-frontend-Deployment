@@ -47,7 +47,7 @@ const Header = () => {
   const HandleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/auth/logout",
+        "https://hh-backend-8rqw.onrender.com/auth/logout",
         {},
         { withCredentials: true }
       );
@@ -66,7 +66,11 @@ const Header = () => {
       newPassword: newPassword,
     };
 try {
-  const res = await axios.patch(`http://localhost:3000/auth/user/editPassword/${userId}`, data, { withCredentials: true });
+  const res = await axios.patch(
+    `https://hh-backend-8rqw.onrender.com/auth/user/editPassword/${userId}`,
+    data,
+    { withCredentials: true }
+  );
 console.log('Password updated successfully'); 
 toast.success("Password updated successfully");
 } catch (error) {
@@ -86,7 +90,7 @@ toast.success("Password updated successfully");
     };
     try {
       const res = await axios.patch(
-        `http://localhost:3000/auth/user/editProfile/${userId}`,
+        `https://hh-backend-8rqw.onrender.com/auth/user/editProfile/${userId}`,
         data
       );
       if (res.status === 200) {

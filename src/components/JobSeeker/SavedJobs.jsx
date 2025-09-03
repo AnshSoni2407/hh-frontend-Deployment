@@ -24,7 +24,7 @@ const SavedJobs = () => {
 
     try {
       const jobs = await axios.get(
-        `http://localhost:3000/job/fetch/savedJobs/${userId}`,
+        `https://hh-backend-8rqw.onrender.com/job/fetch/savedJobs/${userId}`,
         { withCredentials: true }
       );
       setsavedJobs(jobs.data.SavedJobs || []);
@@ -43,7 +43,7 @@ const SavedJobs = () => {
       if (!userId) return;
 
       await axios.delete(
-        `http://localhost:3000/job/removeSavedJob/${jobId}/${userId}`
+        `https://hh-backend-8rqw.onrender.com/job/removeSavedJob/${jobId}/${userId}`
       );
 
       const updatedJobs = savedJobs.filter((job) => job._id !== jobId);

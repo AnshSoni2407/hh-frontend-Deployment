@@ -38,7 +38,11 @@ console.log(userId);
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/job/create", data, {withCredentials: true });
+      const res = await axios.post(
+        "https://hh-backend-8rqw.onrender.com/job/create",
+        data,
+        { withCredentials: true }
+      );
       console.log("Job created successfully", res.data);
       toast.success("Job created successfully!");
 

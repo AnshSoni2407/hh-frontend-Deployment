@@ -24,9 +24,13 @@ const Login = () => {
 
     try { 
   
-      const res = await axios.post("http://localhost:3000/auth/login", data,{
-        withCredentials:true
-      });
+      const res = await axios.post(
+        "https://hh-backend-8rqw.onrender.com/auth/login",
+        data,
+        {
+          withCredentials: true,
+        }
+      );
       setisLoading(true);
       console.log("data sent to backend");
       toast.success("Login successful!");

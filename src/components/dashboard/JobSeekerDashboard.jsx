@@ -11,7 +11,9 @@
       useEffect(() => {
         const job = async () => {
           try {
-            const res = await axios.get("http://localhost:3000/job/fetch");
+            const res = await axios.get(
+              "https://hh-backend-8rqw.onrender.com/job/fetch"
+            );
             setfetchedJobs(res.data);
             setfilterJobs(res.data);
           } catch (error) {

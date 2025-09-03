@@ -16,7 +16,7 @@ const CreatedJobTable = () => {
   const createdJobs = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/job/fetch/createdJobs/${userId}`,
+        `https://hh-backend-8rqw.onrender.com/job/fetch/createdJobs/${userId}`,
         {
           withCredentials: true,
         }
@@ -34,7 +34,7 @@ const CreatedJobTable = () => {
   const handleDelete = async (jobId) => {
     try {
       await axios.delete(
-        `http://localhost:3000/job/deleteJob/${jobId}/${userId}`
+        `https://hh-backend-8rqw.onrender.com/job/deleteJob/${jobId}/${userId}`
       );
       setrefershFlag((prev) => !prev);
       toast.success("Job deleted successfully");
@@ -57,7 +57,7 @@ const CreatedJobTable = () => {
     const jobId = editFormData._id
     try {
       await axios.put(
-        `http://localhost:3000/job/update/${jobId}`,
+        `https://hh-backend-8rqw.onrender.com/job/update/${jobId}`,
         editFormData
       );
       toast.success("Job updated successfully");

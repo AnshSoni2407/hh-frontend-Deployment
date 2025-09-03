@@ -28,7 +28,7 @@ const ExpandedCard = ({ closeExpand, job }) => {
 
     try { 
       const res = await axios.post(
-        `http://localhost:3000/application/apply/${jobId}/${userId}`,
+        `https://hh-backend-8rqw.onrender.com/application/apply/${jobId}/${userId}`,
         formData,
         {
           headers: {

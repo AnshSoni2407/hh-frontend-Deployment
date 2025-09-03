@@ -18,7 +18,7 @@ const AppliedJobs = () => {
   const fetchAppliedJobs = async () => {
     try {
       const job = await axios.get(
-        `http://localhost:3000/application/fetch/${userId}`
+        `https://hh-backend-8rqw.onrender.com/application/fetch/${userId}`
       );
       setAppliedJobs(job.data.jobs);
     } catch (error) {

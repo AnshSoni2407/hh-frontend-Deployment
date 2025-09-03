@@ -55,7 +55,10 @@ const Register = () => {
 
     try {
       
-      const res = await axios.post("http://localhost:3000/auth/sign-up", data);
+      const res = await axios.post(
+        "https://hh-backend-8rqw.onrender.com/auth/sign-up",
+        data
+      );
      
 
       toast.success("✅ Registration Successful!");
