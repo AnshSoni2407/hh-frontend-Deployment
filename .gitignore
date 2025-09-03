@@ -1,0 +1,74 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# OS generated files
+
+# Node modules
+node_modules/
+node_modules
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Build output
+build/
+out/
+coverage/
+*.tsbuildinfo
+
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Misc
+*.pid
+*.seed
+*.log.[0-9]*
+*.tgz
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+# Windows image file caches
+*.stackdump
+
+# IDE files
+*.iml
+*.ipr
+*.iws
+
+# Test output
+test-output/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
