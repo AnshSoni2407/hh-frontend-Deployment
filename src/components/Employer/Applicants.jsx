@@ -16,7 +16,7 @@ const Applicants = () => {
   const fetchApplicants = async () => {
     try {
       const response = await axios.get(
-        `https://hh-backend-8rqw.onrender.com/application/fetch/applicants/${userId}`
+        `https://hh-backend-deployment.onrender.com/application/fetch/applicants/${userId}`
       );
       setApplicants(response.data.applicants);
       setFilterApplicants(response.data.applicants);
@@ -38,7 +38,7 @@ const handleStatusUpdate = async (applicationId, newStatus) => {
     console.log("before api call");
 
     const statusUpdate = await axios.patch(
-      `https://hh-backend-8rqw.onrender.com/application/update/${applicationId}`,
+      `https://hh-backend-deployment.onrender.com/application/update/${applicationId}`,
       { status: newStatus }
     );
 

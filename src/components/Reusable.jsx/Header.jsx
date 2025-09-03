@@ -7,25 +7,25 @@ import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import Footer from "./Footer";
-import { toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const Header = () => {
   const role = localStorage.getItem("role");
   const loggedInEmp = JSON.parse(localStorage.getItem("loggedInEmp"));
   const userName = loggedInEmp.name;
   const userId = loggedInEmp.id;
-  const userPhone = loggedInEmp.phone;  
+  const userPhone = loggedInEmp.phone;
   const profileLogo = loggedInEmp.name.charAt(0).toUpperCase();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactUs, setcontactUs] = useState(false);
   const [openEditForm, setopenEditForm] = useState(false);
-  const [openEditPasswordForm, setopenEditPasswordForm] = useState(false)
+  const [openEditPasswordForm, setopenEditPasswordForm] = useState(false);
   const [updatedName, setupdatedName] = useState(userName);
   const [updatedPhone, setupdatedPhone] = useState(userPhone);
   const [currentPassword, setcurrentPassword] = useState("");
-  const [newPassword, setnewPassword] = useState('')
+  const [newPassword, setnewPassword] = useState("");
   const [showReloginModel, setshowReloginModel] = useState(false);
 
   const dropdownRef = useRef(null);
@@ -47,7 +47,7 @@ const Header = () => {
   const HandleLogout = async () => {
     try {
       await axios.post(
-        "https://hh-backend-8rqw.onrender.com/auth/logout",
+        "https://hh-backend-deployment.onrender.com/auth/logout",
         {},
         { withCredentials: true }
       );
@@ -65,32 +65,29 @@ const Header = () => {
       oldPassword: currentPassword,
       newPassword: newPassword,
     };
-try {
-  const res = await axios.patch(
-    `https://hh-backend-8rqw.onrender.com/auth/user/editPassword/${userId}`,
-    data,
-    { withCredentials: true }
-  );
-console.log('Password updated successfully'); 
-toast.success("Password updated successfully");
-} catch (error) {
-  console.log(`Error updating password: ${error}`, error);
-  toast.error(error.response.data.message);
-  
-}
-
-  }
+    try {
+      const res = await axios.patch(
+        `https://hh-backend-deployment.onrender.com/auth/user/editPassword/${userId}`,
+        data,
+        { withCredentials: true }
+      );
+      console.log("Password updated successfully");
+      toast.success("Password updated successfully");
+    } catch (error) {
+      console.log(`Error updating password: ${error}`, error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   const handleEditProfile = async (e) => {
     e.preventDefault();
     const data = {
       name: updatedName,
       phone: updatedPhone,
-     
     };
     try {
       const res = await axios.patch(
-        `https://hh-backend-8rqw.onrender.com/auth/user/editProfile/${userId}`,
+        `https://hh-backend-deployment.onrender.com/auth/user/editProfile/${userId}`,
         data
       );
       if (res.status === 200) {
@@ -102,8 +99,6 @@ toast.success("Password updated successfully");
       console.log(`Update error: ${error.message}`);
     }
   };
-
-  
 
   useEffect(() => {
     document.body.style.overflow = openEditForm ? "hidden" : "auto";
@@ -202,7 +197,7 @@ toast.success("Password updated successfully");
               <div
                 onClick={() => setopenEditPasswordForm(true)}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center justify-between"
-               >
+              >
                 <p>Change Password</p>
                 <FaLock />
               </div>
@@ -456,10 +451,6 @@ toast.success("Password updated successfully");
                 </div>
               </div>
             </div>
-          
-
-
-         
           </div>
         </div>
       )}

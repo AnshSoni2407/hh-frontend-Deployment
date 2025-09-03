@@ -56,7 +56,7 @@ const Register = () => {
     try {
       
       const res = await axios.post(
-        "https://hh-backend-8rqw.onrender.com/auth/sign-up",
+        "https://hh-backend-deployment.onrender.com/auth/sign-up",
         data
       );
      

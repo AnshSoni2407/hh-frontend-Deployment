@@ -20,7 +20,7 @@ const JobCards = ({ jobs }) => {
   const fetchSavedJobs = useCallback(async () => {
     try {
       const res = await axios.get(
-        `https://hh-backend-8rqw.onrender.com/job/fetch/savedJobs/${loggedInUser}`
+        `https://hh-backend-deployment.onrender.com/job/fetch/savedJobs/${loggedInUser}`
       );
       setSavedJobs(res.data.SavedJobs);
     } catch (error) {
@@ -40,11 +40,11 @@ const JobCards = ({ jobs }) => {
     try {
       if (isJobSaved(jobId)) {
         await axios.delete(
-          `https://hh-backend-8rqw.onrender.com/job/removeSavedJob/${jobId}/${loggedInUser}`
+          `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${loggedInUser}`
         );
       } else {
         await axios.post(
-          `https://hh-backend-8rqw.onrender.com/job/savedJobs/${jobId}/${loggedInUser}`
+          `https://hh-backend-deployment.onrender.com/job/savedJobs/${jobId}/${loggedInUser}`
         );
       }
       fetchSavedJobs();
