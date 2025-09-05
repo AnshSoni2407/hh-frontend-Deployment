@@ -88,7 +88,7 @@ const Header = () => {
     try {
       const res = await axios.patch(
         `https://hh-backend-deployment.onrender.com/auth/user/editProfile/${userId}`,
-        data
+        data,{ withCredentials: true }
       );
       if (res.status === 200) {
         console.log("Profile updated");

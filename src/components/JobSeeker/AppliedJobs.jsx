@@ -18,7 +18,8 @@ const AppliedJobs = () => {
   const fetchAppliedJobs = async () => {
     try {
       const job = await axios.get(
-        `https://hh-backend-deployment.onrender.com/application/fetch/${userId}`
+        `https://hh-backend-deployment.onrender.com/application/fetch/${userId}`,
+        { withCredentials: true }
       );
       setAppliedJobs(job.data.jobs);
     } catch (error) {

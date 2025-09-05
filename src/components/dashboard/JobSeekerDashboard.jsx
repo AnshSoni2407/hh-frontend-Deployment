@@ -12,7 +12,8 @@
         const job = async () => {
           try {
             const res = await axios.get(
-              "https://hh-backend-deployment.onrender.com/job/fetch"
+              "https://hh-backend-deployment.onrender.com/job/fetch",
+              { withCredentials: true }
             );
             setfetchedJobs(res.data);
             setfilterJobs(res.data);

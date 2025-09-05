@@ -34,7 +34,8 @@ const CreatedJobTable = () => {
   const handleDelete = async (jobId) => {
     try {
       await axios.delete(
-        `https://hh-backend-deployment.onrender.com/job/deleteJob/${jobId}/${userId}`
+        `https://hh-backend-deployment.onrender.com/job/deleteJob/${jobId}/${userId}`,
+        { withCredentials: true }
       );
       setrefershFlag((prev) => !prev);
       toast.success("Job deleted successfully");
@@ -58,7 +59,8 @@ const CreatedJobTable = () => {
     try {
       await axios.put(
         `https://hh-backend-deployment.onrender.com/job/update/${jobId}`,
-        editFormData
+        editFormData,
+        { withCredentials: true }
       );
       toast.success("Job updated successfully");
       setShowEditModal(false);

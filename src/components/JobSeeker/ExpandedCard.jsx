@@ -34,7 +34,7 @@ const ExpandedCard = ({ closeExpand, job }) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },{ withCredentials: true }
       );
       console.log("Application submitted:", res.data);
       toast.success("Application submitted successfully!");

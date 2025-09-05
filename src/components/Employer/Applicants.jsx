@@ -16,9 +16,10 @@ const Applicants = () => {
   const fetchApplicants = async () => {
     try {
       const response = await axios.get(
-        `https://hh-backend-deployment.onrender.com/application/fetch/applicants/${userId}`
+        `https://hh-backend-deployment.onrender.com/application/fetch/applicants/${userId}`,
+        { withCredentials: true }
       );
-      setApplicants(response.data.applicants);
+      setApplicants(response.data.applicants);  
       setFilterApplicants(response.data.applicants);
     } catch (error) {
       console.error("Error fetching applicants:", error);
@@ -39,7 +40,7 @@ const handleStatusUpdate = async (applicationId, newStatus) => {
 
     const statusUpdate = await axios.patch(
       `https://hh-backend-deployment.onrender.com/application/update/${applicationId}`,
-      { status: newStatus }
+      { status: newStatus },{ withCredentials: true }
     );
 
     console.log("after api call", statusUpdate);

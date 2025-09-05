@@ -43,7 +43,7 @@ const SavedJobs = () => {
       if (!userId) return;
 
       await axios.delete(
-        `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${userId}`
+        `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${userId}`,{  withCredentials: true }
       );
 
       const updatedJobs = savedJobs.filter((job) => job._id !== jobId);

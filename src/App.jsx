@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/appliedJobs" element={<AppliedJobs />} />
           <Route path="/applicants" element={<Applicants/>} />
 
-          {/* Add more routes as needed */}
+     
         </Routes>
       </BrowserRouter>
     </div>

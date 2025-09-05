@@ -16,10 +16,10 @@ const Footer = () => {
           <div>
 
           <a href="https://apps.apple.com/app/id1234567890" target="_blank" rel="noopener noreferrer">
-            <img src="./public/ios-app_v1.png" className="inline cursor-pointer mr-2.5 w-[10vw]" />
+            <img src="/ios-app_v1.png" className="inline cursor-pointer mr-2.5 w-[10vw]" />
           </a>
           <a href="https://play.google.com/store/apps/details?id=com.example.app" target="_blank" rel="noopener noreferrer">
-            <img src="./public/android-app_v1.png" className="inline cursor-pointer w-[10vw]" />
+            <img src="./android-app_v1.png" className="inline cursor-pointer w-[10vw]" />
           </a>
         </div>
       </div>
