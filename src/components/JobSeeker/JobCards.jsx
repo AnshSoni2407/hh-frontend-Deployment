@@ -5,6 +5,7 @@ import { IoLocation, IoPeopleSharp } from "react-icons/io5";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import axios from "axios";
 import ExpandedCard from "./ExpandedCard.jsx";
+import { toast } from "react-toastify";
 
 const JobCards = ({ jobs }) => {
   const [cardExpand, setcardExpand] = useState(false);
@@ -23,6 +24,7 @@ const JobCards = ({ jobs }) => {
         `https://hh-backend-deployment.onrender.com/job/fetch/savedJobs/${loggedInUser}`,
         { withCredentials: true }
       );
+      
       setSavedJobs(res.data.SavedJobs);
     } catch (error) {
       console.log("Error fetching saved jobs:", error.message);
@@ -43,11 +45,13 @@ const JobCards = ({ jobs }) => {
         await axios.delete(
           `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${loggedInUser}`, { withCredentials: true }
         );
+        toast.info("Job removed from saved list");
       } else {
         await axios.post(
           `https://hh-backend-deployment.onrender.com/job/savedJobs/${jobId}/${loggedInUser}`,
           { withCredentials: true }
         );
+        toast.success("Job added to saved list");
       }
       fetchSavedJobs();
     } catch (error) {

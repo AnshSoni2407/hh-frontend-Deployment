@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import ExpandedCard from "./ExpandedCard.jsx";
 import Footer from "../Reusable.jsx/Footer.jsx";
+import { toast } from "react-toastify";
 
 const SavedJobs = () => {
   const [savedJobs, setsavedJobs] = useState([]);
@@ -28,6 +29,7 @@ const SavedJobs = () => {
         { withCredentials: true }
       );
       setsavedJobs(jobs.data.SavedJobs || []);
+      
     } catch (error) {
       console.error("Error fetching saved jobs:", error.message);
     }
@@ -46,8 +48,10 @@ const SavedJobs = () => {
         `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${userId}`,{  withCredentials: true }
       );
 
+
       const updatedJobs = savedJobs.filter((job) => job._id !== jobId);
       setsavedJobs(updatedJobs);
+      toast.success("Job removed from saved list");
     } catch (error) {
       console.log("Error removing job:", error.message);
     }
