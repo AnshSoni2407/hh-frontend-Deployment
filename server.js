@@ -12,24 +12,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Allowed origins (local + deployed frontend)
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://hh-frontend-deployment.vercel.app",
 ];
 
-// CORS setup
+
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
+    origin: allowedOrigins,
+    credentials: true, // allow cookies/auth headers
   })
 );
 
@@ -42,6 +35,17 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use("/auth", authRoutes);
 app.use("/job", jobRoutes);
 app.use("/application", applicationRoutes);
+
+// Test cookie route (for debugging)
+app.get("/test-cookie", (req, res) => {
+  res.cookie("testToken", "123456", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 60000,
+  });
+  res.json({ message: "Cookie set successfully!" });
+});
 
 // Start Server + DB connect
 app.listen(PORT, () => {
