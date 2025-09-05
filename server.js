@@ -43,8 +43,7 @@ app.get("/test-cookie", (req, res) => {
     secure: true,
     sameSite: "None",
     maxAge: 60000,
-  });
-  res.json({ message: "Cookie set successfully!" });
+  }).send('cookie testing');
 });
 
 // Start Server + DB connect
