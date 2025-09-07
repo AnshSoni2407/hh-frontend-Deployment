@@ -22,6 +22,7 @@ const AppliedJobs = () => {
         { withCredentials: true }
       );
       setAppliedJobs(job.data.jobs);
+      console.log(job.data.jobs);
     } catch (error) {
       console.log(`error in fetching Applied jobs ${error.message}`);
     }
