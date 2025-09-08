@@ -9,22 +9,31 @@ import {
 import { Link } from "react-router-dom";
 import Footer from "../Reusable.jsx/Footer.jsx";
 import axios from "axios";
+import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader.jsx";
 
 const AppliedJobs = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const [isLoading, setisLoading] = useState(false)
 
   const userId = JSON.parse(localStorage.getItem("loggedInEmp")).id;
 
   const fetchAppliedJobs = async () => {
     try {
+      setisLoading(true);
       const job = await axios.get(
         `https://hh-backend-deployment.onrender.com/application/fetch/${userId}`,
         { withCredentials: true }
       );
       setAppliedJobs(job.data.jobs);
-      console.log(job.data.jobs);
+      console.log('this is the applied jobs', job.data.jobs);
+      toast.success("Applied jobs fetched successfully");
     } catch (error) {
       console.log(`error in fetching Applied jobs ${error.message}`);
+      toast.error("Error fetching applied jobs");
+    }
+    finally{
+      setisLoading(false)
     }
   };
 
@@ -34,6 +43,8 @@ const AppliedJobs = () => {
  
   return (
     <div className="min-h-screen flex flex-col">
+    {isLoading && <FancyLoader />}
+   
       {/* Header */}
       <div className="flex justify-between items-center p-4 shadow-lg bg-black">
         <Link to={"/jobseekerDash"}>
@@ -72,37 +83,37 @@ const AppliedJobs = () => {
                 {appliedJobs.map((job) => (
                   job?.jobId ? (
                      <tr
-                    key={job._id}
+                    key={job?._id}
                     className="border-b hover:bg-gray-100 transition"
                   >
                     <td className="p-4">
                       <h3 className="text-base md:text-lg font-semibold">
-                        {job.jobId.jobTitle}
+                        {job?.jobId?.jobTitle}
                       </h3>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center justify-center">
                         <IoLocation className="text-xl md:text-2xl text-gray-500 mr-2" />
-                        <span>{job.jobId.location}</span>
+                        <span>{job?.jobId?.location}</span>
                       </div>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center justify-center">
                         <HiBuildingOffice2 className="text-xl md:text-2xl text-gray-500 mr-2" />
-                        <span>{job.jobId.jobType}</span>
+                        <span>{job?.jobId?.jobType}</span>
                       </div>
                     </td>
                     <td className="p-4">
                       <div className="flex items-center justify-center">
                         <IoPeopleSharp className="text-xl md:text-2xl text-gray-500 mr-2" />
-                        <span>{job.jobId.postedBy.phone}</span>
+                        <span>{job.jobId?.postedBy?.phone || 'N/A' }</span>
                       </div>
                     </td>
                     <td className="p-4">
                       <div
                         className="bg-[#c8ac5a] text-black font-semibold hover:text-white px-3 py-1 md:px-4 md:py-2 rounded hover:bg-black transition duration-300 cursor-default "
                       >
-                        {job.status}
+                        {job?.status}
                       </div>
                     </td>
                   </tr>

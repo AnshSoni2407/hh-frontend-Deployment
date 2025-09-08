@@ -4,8 +4,9 @@ import axios from "axios";
 import { IoMdPerson, IoIosMail, IoMdUnlock } from "react-icons/io";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FancyLoader from "../Reusable.jsx/Loader";
 
 const Register = () => {
  
@@ -23,6 +24,7 @@ const Register = () => {
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [password, setpassword] = useState("");
+  const [isLoading, setisLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +56,7 @@ const Register = () => {
     };
 
     try {
-      
+      setisLoading(true);
       const res = await axios.post(
         "https://hh-backend-deployment.onrender.com/auth/sign-up",
         data,
@@ -75,11 +77,15 @@ const Register = () => {
       console.error("Error submitting form:", error.response.data.message);
       toast.error(`${error.response.data.message}`);
     }
+    finally{
+      setisLoading(false);
+    }
     
   };
 
   return (
     <div className="min-h-screen flex justify-center items-start py-10 bg-gray-300 ">
+    {isLoading && <FancyLoader/>}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center text-center justify-center h-auto w-[90%] md:w-1/2 p-4 bg-white rounded-lg"
@@ -216,8 +222,6 @@ const Register = () => {
         </Link>
       </form>
 
-      {/* ✅ Toast Container */}
-      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

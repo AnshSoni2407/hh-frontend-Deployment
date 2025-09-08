@@ -4,25 +4,34 @@
     import CardContainer from "../JobSeeker/CardContainer";
     import Footer from "../Reusable.jsx/Footer";
     import SearchJob from "../JobSeeker/SearchJob"; 
+import FancyLoader from '../Reusable.jsx/Loader';
+import { toast } from 'react-toastify';
     const JobSeekerDashboard = () => {
 
       const [fetchedJobs, setfetchedJobs] = useState([])
       const [filterJobs, setfilterJobs] = useState([])
+      const [isLoading, setisLoading] = useState(false)
       useEffect(() => {
         const job = async () => {
           try {
+            setisLoading(true);
             const res = await axios.get(
               "https://hh-backend-deployment.onrender.com/job/fetch",
               { withCredentials: true }
             );
             setfetchedJobs(res.data);
             setfilterJobs(res.data);
+            toast.success("Jobs fetched successfully")
           } catch (error) {
             console.log(error.message, "Error fetching jobs");
+            toast.error("Error fetching jobs")
+          }
+          finally {
+            setisLoading(false);
           }
         };
-      
-        job()
+
+        job();
       }, [])
       
 
@@ -41,6 +50,7 @@
 
       return (
         <div className="flex flex-col  min-h-screen bg-gray-100">
+        {isLoading && <FancyLoader/>}
           <Header />
           <SearchJob onSearch={handleSearch} />
         

@@ -4,7 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import Footer from "../Reusable.jsx/Footer.jsx";
 import axios from "axios";
 import FancyLoader from '../Reusable.jsx/Loader.jsx'
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const ExpandedCard = ({ closeExpand, job }) => {
   const [resume, setResume] = useState(null);
@@ -27,6 +27,7 @@ const ExpandedCard = ({ closeExpand, job }) => {
     formData.append("resume", resume);
 
     try { 
+      setisLoading(true);
       const res = await axios.post(
         `https://hh-backend-deployment.onrender.com/application/apply/${jobId}/${userId}`,
         formData,
@@ -45,15 +46,14 @@ const ExpandedCard = ({ closeExpand, job }) => {
     finally{
       setResume(null);
       setisLoading(false);
-     setTimeout(() => closeExpand(), 3000);
+     setTimeout(() => closeExpand(), 2000);
     }
 
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-y-auto shadow-xl">
-    
-      
+     
       <div className="flex justify-between items-center p-4 shadow-lg bg-black">
         <button
           onClick={closeExpand}
@@ -70,7 +70,6 @@ const ExpandedCard = ({ closeExpand, job }) => {
         </button>
       </div>
 {isLoading && <FancyLoader />}
-<ToastContainer position="top-right" autoClose={3000} />
       {/* Main Content */}
       <section className="flex flex-col lg:flex-row min-h-[calc(100vh-140px)]">
         {/* Job Details Section */}

@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader";
 
 
 const CreateJob = () => {
@@ -14,6 +15,7 @@ const CreateJob = () => {
   const [experience, setexperience] = useState("");
   const [description, setdescription] = useState("");
   const [skills, setskills] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
 
 
@@ -38,6 +40,7 @@ console.log(userId);
     };
 
     try {
+      setisLoading(true);
       const res = await axios.post(
         "https://hh-backend-deployment.onrender.com/job/create",
         data,
@@ -59,11 +62,14 @@ console.log(userId);
       toast.error('Error while creating job ');
       console.error("Error creating job:", error.message);
     }
+    finally{
+      setisLoading(false);
+    }
   };
 
   return (
     <div className="flex justify-center items-center bg-gray-100 p-4 mt-8">
-      <ToastContainer position="top-right" autoClose={3000} />
+      {isLoading && <FancyLoader />}
       <form
         onSubmit={handleSubmit}
         className="relative bg-white shadow-lg rounded-xl p-8 w-full max-w-4xl"

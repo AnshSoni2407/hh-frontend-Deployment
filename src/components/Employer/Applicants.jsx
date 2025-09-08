@@ -3,11 +3,13 @@ import { MdArrowBack } from "react-icons/md";
 import { IoCloseOutline, IoCall } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader";
 
 const Applicants = () => {
   const [applicants, setApplicants] = useState([]);
   const [filterApplicants, setFilterApplicants] = useState([]);
+  const [isLoading, setisLoading] = useState(false)
 
   const user = JSON.parse(localStorage.getItem("loggedInEmp"));
   const userId = user.id;
@@ -15,6 +17,7 @@ const Applicants = () => {
   // Fetch applicants
   const fetchApplicants = async () => {
     try {
+      setisLoading(true)
       const response = await axios.get(
         `https://hh-backend-deployment.onrender.com/application/fetch/applicants/${userId}`,
         { withCredentials: true }
@@ -24,6 +27,9 @@ const Applicants = () => {
     } catch (error) {
       console.error("Error fetching applicants:", error);
       toast.error("Error fetching applicants");
+    }
+    finally{
+      setisLoading(false)
     }
   };
 
@@ -36,8 +42,7 @@ const Applicants = () => {
   }, [applicants]);
 const handleStatusUpdate = async (applicationId, newStatus) => {
   try {
-    console.log("before api call");
-
+    setisLoading(true);
     const statusUpdate = await axios.patch(
       `https://hh-backend-deployment.onrender.com/application/update/${applicationId}`,
       { status: newStatus },{ withCredentials: true }
@@ -61,6 +66,9 @@ const handleStatusUpdate = async (applicationId, newStatus) => {
   } catch (error) {
     console.error("Error updating status:", error);
     toast.error("Failed to update status");
+  }
+  finally{
+    setisLoading(false);
   }
 };
 
@@ -122,7 +130,6 @@ const handleStatusUpdate = async (applicationId, newStatus) => {
         </button>
       </div>
 
-      <ToastContainer position="top-right" autoClose={3000} />
       {/* Applicants List */}
       <div className="flex flex-wrap justify-center">
         {filterApplicants.length === 0 ? (
@@ -196,6 +203,8 @@ const handleStatusUpdate = async (applicationId, newStatus) => {
           ))
         )}
       </div>
+      {isLoading && <FancyLoader />}
+
     </div>
   );
 };

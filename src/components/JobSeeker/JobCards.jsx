@@ -6,11 +6,13 @@ import { HiBuildingOffice2 } from "react-icons/hi2";
 import axios from "axios";
 import ExpandedCard from "./ExpandedCard.jsx";
 import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader.jsx";
 
 const JobCards = ({ jobs }) => {
   const [cardExpand, setcardExpand] = useState(false);
   const [selectedJob, setselectedJob] = useState(null);
   const [savedJobs, setSavedJobs] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
 
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInEmp"))?.id;
 
@@ -20,14 +22,18 @@ const JobCards = ({ jobs }) => {
 
   const fetchSavedJobs = useCallback(async () => {
     try {
+      setisLoading(true);
       const res = await axios.get(
         `https://hh-backend-deployment.onrender.com/job/fetch/savedJobs/${loggedInUser}`,
         { withCredentials: true }
       );
-      
-      setSavedJobs(res.data.SavedJobs);
+      toast.success("Saved jobs fetched successfully");
+      setSavedJobs(res?.data?.SavedJobs);
     } catch (error) {
       console.log("Error fetching saved jobs:", error.message);
+      toast.error("Error fetching saved jobs");
+    } finally {
+      setisLoading(false);
     }
   }, [loggedInUser]);
 
@@ -61,10 +67,10 @@ const JobCards = ({ jobs }) => {
 
   return (
     <div className="flex flex-wrap justify-center">
+      {isLoading && <FancyLoader />}
       {cardExpand && (
         <ExpandedCard closeExpand={closeExpandedCard} job={selectedJob} />
       )}
-
       {jobs.map((job) => (
         <div
           key={job._id}

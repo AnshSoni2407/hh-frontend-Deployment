@@ -3,18 +3,21 @@ import axios from "axios";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader";
 
 const CreatedJobTable = () => {
   const [createdJobsByEmp, setcreatedJobsByEmp] = useState([]);
   const [refershFlag, setrefershFlag] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editFormData, setEditFormData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userId = JSON.parse(localStorage.getItem("loggedInEmp")).id;
 
   const createdJobs = async () => {
     try {
+setIsLoading(true);
       const res = await axios.get(
         `https://hh-backend-deployment.onrender.com/job/fetch/createdJobs/${userId}`,
         {
@@ -24,6 +27,9 @@ const CreatedJobTable = () => {
       setcreatedJobsByEmp(res.data.createdJobs.CreatedJobs);
     } catch (error) {
       console.error("Error fetching created jobs:", error.message);
+    }
+    finally{
+      setIsLoading(false);
     } 
   };
 
@@ -33,6 +39,7 @@ const CreatedJobTable = () => {
 
   const handleDelete = async (jobId) => {
     try {
+      setIsLoading(true);
       await axios.delete(
         `https://hh-backend-deployment.onrender.com/job/deleteJob/${jobId}/${userId}`,
         { withCredentials: true }
@@ -42,6 +49,9 @@ const CreatedJobTable = () => {
     } catch (error) {
       console.log("error in job deleting", error.message);
       toast.error("Error deleting job");
+    }
+    finally{
+      setIsLoading(false);
     }
   };
 
@@ -57,6 +67,7 @@ const CreatedJobTable = () => {
   const handleUpdate = async () => {
     const jobId = editFormData._id
     try {
+      setIsLoading(true);
       await axios.put(
         `https://hh-backend-deployment.onrender.com/job/update/${jobId}`,
         editFormData,
@@ -69,11 +80,14 @@ const CreatedJobTable = () => {
       console.log("Update error:", error.message);
       toast.error("Error updating job");
     }
+    finally{
+      setIsLoading(false);
+    }
   };
 
   return (
     <div>
-      <ToastContainer position="top-right" autoClose={2000} />
+      {isLoading && <FancyLoader />}
       <div className="flex items-center justify-between bg-black text-[#E0C163] p-2 shadow-lg w-full mb-6">
         <Link to={"/employerDash"}>
           <button className="text-2xl hover:text-black hover:bg-[#E0C163] p-2 rounded-full transition">

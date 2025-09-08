@@ -3,12 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdPerson, IoIosMail, IoMdUnlock } from "react-icons/io";
 import { useState } from "react";
 import FancyLoader from '../Reusable.jsx/Loader.jsx'
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const Login = () => {
-  const [RegisterAs, setregisterAs] = useState("jobseeker");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [isLoading, setisLoading] = useState(false);
@@ -23,7 +22,7 @@ const Login = () => {
     };
 
     try { 
-  
+     setisLoading(true);
       const res = await axios.post(
         "https://hh-backend-deployment.onrender.com/auth/login",
         data,
@@ -31,8 +30,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      setisLoading(true);
-      console.log("data sent to backend");
+   
       toast.success("Login successful!");
 
       const userRole = res.data.userdetail.RegisterAs;
@@ -57,7 +55,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center py-10 bg-gray-300 ">
-      <ToastContainer position="top-right" autoClose={3000} />
       {isLoading && <FancyLoader />}
       <form
         onSubmit={handleSubmit}

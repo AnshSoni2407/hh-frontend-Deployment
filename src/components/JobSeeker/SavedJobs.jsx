@@ -13,9 +13,11 @@ import { MdDeleteForever } from "react-icons/md";
 import ExpandedCard from "./ExpandedCard.jsx";
 import Footer from "../Reusable.jsx/Footer.jsx";
 import { toast } from "react-toastify";
+import FancyLoader from "../Reusable.jsx/Loader.jsx";
 
 const SavedJobs = () => {
   const [savedJobs, setsavedJobs] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
   const [cardExpand, setcardExpand] = useState(false);
   const [selectedJob, setselectedJob] = useState(null);
 
@@ -29,9 +31,13 @@ const SavedJobs = () => {
         { withCredentials: true }
       );
       setsavedJobs(jobs.data.SavedJobs || []);
-      
+      toast.success("Saved jobs fetched successfully");
     } catch (error) {
+      toast.error("Error fetching saved jobs");
       console.error("Error fetching saved jobs:", error.message);
+    }
+    finally {
+
     }
   };
 
@@ -43,7 +49,7 @@ const SavedJobs = () => {
     try {
       const userId = JSON.parse(localStorage.getItem("loggedInEmp"))?.id;
       if (!userId) return;
-
+setisLoading(true);
       await axios.delete(
         `https://hh-backend-deployment.onrender.com/job/removeSavedJob/${jobId}/${userId}`,{  withCredentials: true }
       );
@@ -54,6 +60,10 @@ const SavedJobs = () => {
       toast.success("Job removed from saved list");
     } catch (error) {
       console.log("Error removing job:", error.message);
+      toast.error("Error removing job from saved list");
+    }
+    finally{
+      setisLoading(false);
     }
   };
 
@@ -63,6 +73,7 @@ const SavedJobs = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {isLoading && <FancyLoader />}
       {/* Header */}
       <div className="flex justify-between items-center p-4 shadow-lg bg-black">
         <Link to={"/jobseekerDash"}>

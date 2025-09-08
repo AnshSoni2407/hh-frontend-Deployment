@@ -7,7 +7,8 @@ import { MdArrowBack } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import Footer from "./Footer";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import FancyLoader from "./Loader";
 
 const Header = () => {
   const role = localStorage.getItem("role");
@@ -27,6 +28,7 @@ const Header = () => {
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [showReloginModel, setshowReloginModel] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -46,6 +48,7 @@ const Header = () => {
 
   const HandleLogout = async () => {
     try {
+      setisLoading(true);
       await axios.post(
         "https://hh-backend-deployment.onrender.com/auth/logout",
         {},
@@ -54,8 +57,13 @@ const Header = () => {
       localStorage.removeItem("loggedInEmp");
       localStorage.removeItem("role");
       window.location.href = "/";
+      toast.success("Logged out successfully");
     } catch (error) {
       console.log(`Error logging out: ${error.message}`);
+      toast.error("Error logging out");
+    }
+    finally {
+      setisLoading(false);
     }
   };
 
@@ -66,6 +74,7 @@ const Header = () => {
       newPassword: newPassword,
     };
     try {
+      setisLoading(true);
       const res = await axios.patch(
         `https://hh-backend-deployment.onrender.com/auth/user/editPassword/${userId}`,
         data,
@@ -77,6 +86,9 @@ const Header = () => {
       console.log(`Error updating password: ${error}`, error);
       toast.error(error.response.data.message);
     }
+    finally {
+      setisLoading(false);
+    }
   };
 
   const handleEditProfile = async (e) => {
@@ -86,6 +98,8 @@ const Header = () => {
       phone: updatedPhone,
     };
     try {
+      setisLoading(true);
+      toast.success("Profile updated successfully");
       const res = await axios.patch(
         `https://hh-backend-deployment.onrender.com/auth/user/editProfile/${userId}`,
         data,{ withCredentials: true }
@@ -96,7 +110,11 @@ const Header = () => {
         setopenEditForm(false);
       }
     } catch (error) {
+      toast.error('Error while updating profile');
       console.log(`Update error: ${error.message}`);
+    }
+    finally{
+      setisLoading(false);
     }
   };
 
@@ -474,7 +492,7 @@ const Header = () => {
           </div>
         </div>
       )}
-      <ToastContainer position="top-right" autoClose={2000} />
+      {isLoading && <FancyLoader />}
     </div>
   );
 };
