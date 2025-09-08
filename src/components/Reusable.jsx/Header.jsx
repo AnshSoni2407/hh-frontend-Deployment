@@ -451,19 +451,19 @@ const Header = () => {
               <div className="text-center space-y-6 text-gray-800">
                 <div>
                   <h2 className="text-2xl font-bold text-black mb-2">
-                    📧 Email
+                    Email📧
                   </h2>
                   <p className="text-lg">hirehunt@support.com</p>
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-black mb-2">
-                    📞 Phone
+                    Phone📞
                   </h2>
                   <p className="text-lg">+91 98765 43210</p>
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-black mb-2">
-                    📍 Location
+                    Location📍
                   </h2>
                   <p className="text-lg">Dehradun, India</p>
                 </div>
