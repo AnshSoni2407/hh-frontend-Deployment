@@ -27,7 +27,6 @@ const JobCards = ({ jobs }) => {
         `https://hh-backend-deployment.onrender.com/job/fetch/savedJobs/${loggedInUser}`,
         { withCredentials: true }
       );
-      toast.success("Saved jobs fetched successfully");
       setSavedJobs(res?.data?.SavedJobs);
     } catch (error) {
       console.log("Error fetching saved jobs:", error.message);
@@ -57,7 +56,6 @@ const JobCards = ({ jobs }) => {
           `https://hh-backend-deployment.onrender.com/job/savedJobs/${jobId}/${loggedInUser}`,
           { withCredentials: true }
         );
-        toast.success("Job added to saved list");
       }
       fetchSavedJobs();
     } catch (error) {

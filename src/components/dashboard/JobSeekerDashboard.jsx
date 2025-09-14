@@ -21,7 +21,6 @@ import { toast } from 'react-toastify';
             );
             setfetchedJobs(res.data);
             setfilterJobs(res.data);
-            toast.success("Jobs fetched successfully")
           } catch (error) {
             console.log(error.message, "Error fetching jobs");
             toast.error("Error fetching jobs")

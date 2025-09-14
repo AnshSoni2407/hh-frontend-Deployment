@@ -31,7 +31,7 @@ const SavedJobs = () => {
         { withCredentials: true }
       );
       setsavedJobs(jobs.data.SavedJobs || []);
-      toast.success("Saved jobs fetched successfully");
+      
     } catch (error) {
       toast.error("Error fetching saved jobs");
       console.error("Error fetching saved jobs:", error.message);

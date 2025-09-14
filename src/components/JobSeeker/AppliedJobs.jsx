@@ -27,7 +27,6 @@ const AppliedJobs = () => {
       );
       setAppliedJobs(job.data.jobs);
       console.log('this is the applied jobs', job.data.jobs);
-      toast.success("Applied jobs fetched successfully");
     } catch (error) {
       console.log(`error in fetching Applied jobs ${error.message}`);
       toast.error("Error fetching applied jobs");
