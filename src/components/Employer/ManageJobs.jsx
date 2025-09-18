@@ -120,8 +120,7 @@ const ManageJobs = () => {
     } catch (error) {
       console.log(`error while editing job by Admin`, error);
       toast.error("Error while updating job");
-      seteditModel(false);
-
+      
     }
   };
 
