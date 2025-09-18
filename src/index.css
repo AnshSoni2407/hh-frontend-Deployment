@@ -1,10 +1,10 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
 
 button{
     cursor: pointer;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
 
 h1, h2, h3, .job-title {
   font-family: 'Poppins', sans-serif;

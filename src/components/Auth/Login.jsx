@@ -44,6 +44,9 @@ const Login = () => {
       } else if (userRole === "employer") {
         Navigate("/employerDash");
       }
+      else {
+        Navigate('/adminDash')
+      }
     } catch (error) {
       console.log("Login error:", error.response.data.message);
       toast.error(error.response.data.message);

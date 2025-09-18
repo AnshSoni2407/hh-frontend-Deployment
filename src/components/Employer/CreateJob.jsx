@@ -5,7 +5,6 @@ import { IoMdArrowBack } from "react-icons/io";
 import { toast } from "react-toastify";
 import FancyLoader from "../Reusable.jsx/Loader";
 
-
 const CreateJob = () => {
   const [jobTitle, setjobTitle] = useState("");
   const [companyName, setcompanyName] = useState("");
@@ -17,23 +16,19 @@ const CreateJob = () => {
   const [skills, setskills] = useState("");
   const [isLoading, setisLoading] = useState(false);
 
-
-
   const handleSubmit = async (e) => {
-
     const userId = JSON.parse(localStorage.getItem("loggedInEmp")).id;
 
     e.preventDefault();
 
-    
-console.log(userId);
+    console.log(userId);
     const data = {
-      jobTitle,
+      jobTitle: jobTitle.toUpperCase(),
       companyName,
-      location : location.toUpperCase(),
+      location: location.toUpperCase(),
       jobType,
       salary: salary,
-      experience,
+      experience: experience.toUpperCase(),
       description,
       skills,
       postedBy: userId,
@@ -57,12 +52,10 @@ console.log(userId);
       setexperience("");
       setdescription("");
       setskills("");
-
     } catch (error) {
-      toast.error('Error while creating job ');
+      toast.error("Error while creating job ");
       console.error("Error creating job:", error.message);
-    }
-    finally{
+    } finally {
       setisLoading(false);
     }
   };

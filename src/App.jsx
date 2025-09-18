@@ -9,6 +9,9 @@ import CreatedJobTable from './components/Employer/CreatedJobTable';
 import AppliedJobs from './components/JobSeeker/AppliedJobs';
 import Applicants from './components/Employer/Applicants';
 import { ToastContainer } from 'react-toastify';
+import ManageJobs from './components/Employer/ManageJobs';
+import ManageUsers from './components/Employer/ManageUsers';
+import AdminDashboard from './components/dashboard/AdminDashboard';
 
 const App = () => {
   return (
@@ -20,12 +23,13 @@ const App = () => {
           <Route path="/sign-up" element={<Register />} />
           <Route path="/employerDash" element={<EmployeDashboard />} />
           <Route path="/jobseekerDash" element={<JobSeekerDashboard />} />
+          <Route path="/adminDash" element={<AdminDashboard />} />
           <Route path="/saveJobsPage" element={<SavedJobs />} />
           <Route path="/createdJobsTable" element={<CreatedJobTable />} />
           <Route path="/appliedJobs" element={<AppliedJobs />} />
-          <Route path="/applicants" element={<Applicants/>} />
-
-     
+          <Route path="/applicants" element={<Applicants />} />
+          <Route path="/manageJobs" element={<ManageJobs />} />
+          <Route path="/manageUsers" element={<ManageUsers />} />
         </Routes>
       </BrowserRouter>
     </div>

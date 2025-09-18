@@ -4,7 +4,7 @@ import { FaEdit, FaLock } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import axios from "axios";
 import { MdArrowBack } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Links, useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 import Footer from "./Footer";
 import { toast } from "react-toastify";
@@ -138,57 +138,72 @@ const Header = () => {
           className="object-contain w-32 h-12 rounded-3xl"
         />
 
-        <div className="hidden md:flex items-center gap-10 md:text-md font-semibold text-gray-600 text-center">
-          {role === "employer" ? (
-            <div
-              className="hover:underline cursor-pointer "
-              onClick={() => {
-                const section = document.getElementById("created-jobs");
-                if (section) section.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Create Jobs
-            </div>
-          ) : (
-            <div
-              className="hover:underline cursor-pointer"
-              onClick={() => {
-                const section = document.getElementById("featured-jobs");
-                if (section) section.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Jobs
-            </div>
-          )}
-
-          <div
-            onClick={() => setcontactUs(true)}
-            className="hover:underline cursor-pointer"
-          >
-            Contact Us
+        {role == "admin" ? (
+          <div className=" hidden md:flex items-center gap-10 md:text-md font-semibold text-gray-600 text-center">
+            <Link to={"/manageJobs"}>
+              <button> Manage Jobs </button>
+            </Link>
+            <Link to={"/manageUsers"}>
+              <button> Manage Users </button>
+            </Link>
           </div>
-          {role === "employer" ? (
-            <Link to="/createdJobsTable">
-              <div className="hover:underline cursor-pointer">Created Jobs</div>
-            </Link>
-          ) : (
+        ) : (
+          <div className="hidden md:flex items-center gap-10 md:text-md font-semibold text-gray-600 text-center">
+            {role === "employer" ? (
+              <div
+                className="hover:underline cursor-pointer "
+                onClick={() => {
+                  const section = document.getElementById("created-jobs");
+                  if (section) section.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Create Jobs
+              </div>
+            ) : (
+              <div
+                className="hover:underline cursor-pointer"
+                onClick={() => {
+                  const section = document.getElementById("featured-jobs");
+                  if (section) section.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Jobs
+              </div>
+            )}
+
             <div
-              onClick={() => navigate("/saveJobsPage")}
+              onClick={() => setcontactUs(true)}
               className="hover:underline cursor-pointer"
             >
-              Saved Job
+              Contact Us
             </div>
-          )}
-          {role === "employer" ? (
-            <Link to="/applicants">
-              <div className="hover:underline cursor-pointer">Applicants</div>
-            </Link>
-          ) : (
-            <Link to="/appliedJobs">
-              <div className="hover:underline cursor-pointer">Applied Jobs</div>
-            </Link>
-          )}
-        </div>
+            {role === "employer" ? (
+              <Link to="/createdJobsTable">
+                <div className="hover:underline cursor-pointer">
+                  Created Jobs
+                </div>
+              </Link>
+            ) : (
+              <div
+                onClick={() => navigate("/saveJobsPage")}
+                className="hover:underline cursor-pointer"
+              >
+                Saved Job
+              </div>
+            )}
+            {role === "employer" ? (
+              <Link to="/applicants">
+                <div className="hover:underline cursor-pointer">Applicants</div>
+              </Link>
+            ) : (
+              <Link to="/appliedJobs">
+                <div className="hover:underline cursor-pointer">
+                  Applied Jobs
+                </div>
+              </Link>
+            )}
+          </div>
+        )}
 
         {/* Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>
@@ -231,70 +246,81 @@ const Header = () => {
       </div>
 
       {/* Mobile Navigation Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden absolute left-0 w-full text-lg font-semibold text-gray-700 text-center bg-white shadow-md ">
-          {role === "employer" ? (
-            <div
-              className="cursor-pointer border-b"
-              onClick={() => {
-                const section = document.getElementById("created-jobs");
-                if (section) section.scrollIntoView({ behavior: "smooth" });
-                setMobileMenuOpen(false);
-              }}
-            >
-              Create Jobs
-            </div>
-          ) : (
-            <div
-              className="cursor-pointer border-b "
-              onClick={() => {
-                const section = document.getElementById("featured-jobs");
-                if (section) section.scrollIntoView({ behavior: "smooth" });
-                setMobileMenuOpen(false);
-              }}
-            >
-              Job
-            </div>
-          )}
-
-          <div
-            onClick={() => {
-              setcontactUs(true);
-              setMobileMenuOpen(false);
-            }}
-            className="cursor-pointer border-b"
-          >
-            Contact Us
+      {mobileMenuOpen &&
+        (role == "admin" ? (
+          <div className="md:hidden absolute left-0 w-full text-lg font-semibold text-gray-700 text-center bg-white shadow-md">
+           <div> <Link to={"/manageJobs"}>
+              <button> Manage Jobs </button>
+            </Link></div>
+            <div>
+            <Link to={"/manageUsers"}>
+              <button> Manage Users </button>
+            </Link></div>
           </div>
-          {role === "employer" ? (
-            <Link
-              to="/createdJobsTable"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <div className="cursor-pointer border-b">Created Jobs</div>
-            </Link>
-          ) : (
+        ) : (
+          <div className="md:hidden absolute left-0 w-full text-lg font-semibold text-gray-700 text-center bg-white shadow-md ">
+            {role === "employer" ? (
+              <div
+                className="cursor-pointer border-b"
+                onClick={() => {
+                  const section = document.getElementById("created-jobs");
+                  if (section) section.scrollIntoView({ behavior: "smooth" });
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Create Jobs
+              </div>
+            ) : (
+              <div
+                className="cursor-pointer border-b "
+                onClick={() => {
+                  const section = document.getElementById("featured-jobs");
+                  if (section) section.scrollIntoView({ behavior: "smooth" });
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Job
+              </div>
+            )}
+
             <div
               onClick={() => {
-                navigate("/saveJobsPage");
+                setcontactUs(true);
                 setMobileMenuOpen(false);
               }}
               className="cursor-pointer border-b"
             >
-              Saved Job
+              Contact Us
             </div>
-          )}
-          {role === "employer" ? (
-            <Link to="/applicants" onClick={() => setMobileMenuOpen(false)}>
-              <div className="cursor-pointer border-b ">Applicants</div>
-            </Link>
-          ) : (
-            <Link to="/appliedJobs" onClick={() => setMobileMenuOpen(false)}>
-              <div className="cursor-pointer border-b">Applied Jobs</div>
-            </Link>
-          )}
-        </div>
-      )}
+            {role === "employer" ? (
+              <Link
+                to="/createdJobsTable"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <div className="cursor-pointer border-b">Created Jobs</div>
+              </Link>
+            ) : (
+              <div
+                onClick={() => {
+                  navigate("/saveJobsPage");
+                  setMobileMenuOpen(false);
+                }}
+                className="cursor-pointer border-b"
+              >
+                Saved Job
+              </div>
+            )}
+            {role === "employer" ? (
+              <Link to="/applicants" onClick={() => setMobileMenuOpen(false)}>
+                <div className="cursor-pointer border-b ">Applicants</div>
+              </Link>
+            ) : (
+              <Link to="/appliedJobs" onClick={() => setMobileMenuOpen(false)}>
+                <div className="cursor-pointer border-b">Applied Jobs</div>
+              </Link>
+            )}
+          </div>
+        ))}
 
       {openEditPasswordForm && (
         <div className="fixed inset-0 z-50 bg-white overflow-y-auto shadow-xl">
