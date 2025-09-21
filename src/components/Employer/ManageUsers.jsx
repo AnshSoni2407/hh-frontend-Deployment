@@ -27,20 +27,22 @@ const ManageUsers = () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        "https://hh-backend-deployment.onrender.com/user/admin/fetch/jobs",
+        "https://hh-backend-deployment.onrender.com/user/admin/fetch/users",
         {
           withCredentials: true,
         }
       );
-      setAllFetchedUsers(res.data.users || []);
-      console.log(res.data.users, "fetched users");
+      setAllFetchedUsers(res.data.allUsers || []);
+      console.log(res.data.allUsers, "fetched users");
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching users", error);
       toast.error("Error fetching users");
     } finally {
       setIsLoading(false);
     }
   };
+const nonAdminUsers = allFetchedUsers.filter((user) => user.RegisterAs !== "admin");
+
 
   // Call on mount + refresh
   useEffect(() => {
@@ -56,7 +58,7 @@ const ManageUsers = () => {
   }, [searchTerm]);
 
   // Filtered users
-  const filteredUsers = allFetchedUsers.filter((user) => {
+  const filteredUsers = nonAdminUsers.filter((user) => {
     const term = debouncedSearchTerm?.trim().toLowerCase();
     if (!term) return true;
     return (
@@ -71,7 +73,7 @@ const ManageUsers = () => {
     try {
       setIsLoading(true);
       const res = await axios.delete(
-        `https://hh-backend-deployment.onrender.com/user/admin/delete/jobs/${userId}`,
+        `https://hh-backend-deployment.onrender.com/user/admin/delete/user/${userId}`,
         { withCredentials: true }
       );
       console.log(res.data, "user deleted");
@@ -112,11 +114,12 @@ const ManageUsers = () => {
     const userID = editFormData._id;
 
     try {
-      const res = await axios.patch(
-        `// TODO: PATCH edit user endpoint/${userID}`,
-        editFormData,
-        { withCredentials: true }
-      );
+     const res = await axios.patch(
+       `https://hh-backend-deployment.onrender.com/user/admin/update/user/${userID}`,
+       editFormData,
+       { withCredentials: true }
+     );
+
       toast.success("User updated successfully");
       setEditModel(false);
       setRefreshFlag((p) => !p);
@@ -156,12 +159,14 @@ const ManageUsers = () => {
             placeholder="Search by Name, Email, Role, Phone..."
           />
           <button
+          type="button"
             onClick={() => setDebouncedSearchTerm(searchTerm)}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Search
           </button>
           <button
+          type="button"
             onClick={() => {
               setSearchTerm("");
               setDebouncedSearchTerm("");
@@ -228,6 +233,7 @@ const ManageUsers = () => {
           >
             <div className="flex items-center justify-between bg-black text-[#E0C163] p-2 shadow-lg w-full mb-6 rounded-lg">
               <button
+                type="button"
                 className="text-2xl hover:text-black hover:bg-[#E0C163] p-2 rounded-full transition"
                 onClick={() => setEditModel(false)}
               >
@@ -235,6 +241,7 @@ const ManageUsers = () => {
               </button>
               <h1 className="text-3xl font-semibold">Edit User</h1>
               <button
+                type="button"
                 onClick={() => setEditModel(false)}
                 className="text-2xl hover:text-black hover:bg-[#E0C163] p-2 rounded-full transition"
               >

@@ -1,35 +1,33 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { IoMdPerson, IoIosMail, IoMdUnlock } from "react-icons/io";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FancyLoader from "../Reusable.jsx/Loader";
 
 const Register = () => {
- 
-
   // regex for validation
 
-  const nameRegex = /^[A-Za-z ]+$/;             
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-  const phoneRegex = /^[0-9]{10}$/;             
-  const passwordRegex = /^.{6,}$/;              
-
+  const nameRegex = /^[A-Za-z ]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9]{10}$/;
+  const passwordRegex = /^.{6,}$/;
 
   const [RegisterAs, setRegisterAs] = useState("jobseeker");
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [password, setpassword] = useState("");
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setisLoading] = useState(false);
+
+  const Navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   
     if (!nameRegex.test(name)) {
       toast.error("❌ Name should only contain letters and spaces");
       return;
@@ -62,30 +60,53 @@ const Register = () => {
         data,
         { withCredentials: true }
       );
-     
 
       toast.success("✅ Registration Successful!");
-
 
       setname("");
       setemail("");
       setphone("");
       setpassword("");
-      console.log(`submitted`, res);
 
+      const role = res.data.savedData.RegisterAs;
+
+      const loggedInEmp = {
+        id: res.data.savedData._id,
+        name: res.data.savedData.name,
+        email: res.data.savedData.email,
+        phone: res.data.savedData.phone,
+        RegisterAs: res.data.savedData.RegisterAs,
+      };
+
+      localStorage.setItem("role", role);
+      localStorage.setItem("loggedInEmp", JSON.stringify(loggedInEmp));
+
+      const roleinlocal = localStorage.getItem("role");
+      
+
+      try {
+        if (roleinlocal === "jobseeker") {
+          Navigate("/jobseekerDash");
+        } else if (roleinlocal === "employer") {
+          Navigate("/employerDash");
+        }
+      } catch (error) {
+        console.log(
+          error,
+          "registration succesfull error in navigate to dashboard"
+        );
+      }
     } catch (error) {
       console.error("Error submitting form:", error.response.data.message);
       toast.error(`${error.response.data.message}`);
-    }
-    finally{
+    } finally {
       setisLoading(false);
     }
-    
   };
 
   return (
     <div className="min-h-screen flex justify-center items-start py-10 bg-gray-300 ">
-    {isLoading && <FancyLoader/>}
+      {isLoading && <FancyLoader />}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center text-center justify-center h-auto w-[90%] md:w-1/2 p-4 bg-white rounded-lg"
@@ -221,7 +242,6 @@ const Register = () => {
           </button>
         </Link>
       </form>
-
     </div>
   );
 };
